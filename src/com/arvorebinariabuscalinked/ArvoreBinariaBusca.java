@@ -62,7 +62,55 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
     
     @Override
     public Valor remover(Chave chave) {
+        
+        if (this.noCorrente.getChave().compareTo(chave) < 0) {
+            this.noCorrente = this.noCorrente.getFilhoEsquerdo();
+        } else if (this.noCorrente.getChave().compareTo(chave) > 0) {
+            this.noCorrente = this.noCorrente.getFilhoDireito();
+        } else {
+
+            // No nao apresenta subarvore a esquerda
+            if (this.noCorrente.getFilhoEsquerdo() == null && this.noCorrente.getFilhoDireito() != null) {
+                this.noCorrente.getFilhoDireito().setPai(this.noCorrente.getPai());
+
+                if (this.noCorrente.getPai().getChave().compareTo(this.noCorrente.getChave()) > 0) {
+                    this.noCorrente.getPai().setFilhoDireito(this.noCorrente.getFilhoDireito());
+                } else {
+                    this.noCorrente.getPai().setFilhoEsquerdo(this.noCorrente.getFilhoDireito());
+                }
+                
+            // No nao apresenta subarvore a direita
+            } else if (this.noCorrente.getFilhoEsquerdo() != null && this.noCorrente.getFilhoDireito() == null) {
+                this.noCorrente.getFilhoEsquerdo().setPai(this.noCorrente.getPai());
+                
+                if (this.noCorrente.getPai().getChave().compareTo(this.noCorrente.getChave()) > 0) {
+                    this.noCorrente.getPai().setFilhoDireito(this.noCorrente.getFilhoEsquerdo());
+                } else {
+                    this.noCorrente.getPai().setFilhoEsquerdo(this.noCorrente.getFilhoEsquerdo());
+                }
+                
+            // No apresenta subarvore
+            } else {
+                No<Chave, Valor> noAux = retornarAntecessor(this.noCorrente);
+                
+                noAux.setPai(this.noCorrente.getPai());
+                // falta implementar
+                
+            }
+            
+        }
+
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    private No<Chave, Valor> retornarAntecessor(No<Chave, Valor> no) {
+        No<Chave, Valor> noCorrente = no.getFilhoEsquerdo();
+        
+        while (noCorrente.getFilhoDireito() != null) {            
+            noCorrente = noCorrente.getFilhoDireito();
+        }
+        
+        return noCorrente;
     }
 
     @Override
@@ -77,7 +125,11 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
 
     @Override
     public boolean ehVazia() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (this.raiz == null) {
+            return true;
+        }
+        
+        return false;
     }
 
     @Override
