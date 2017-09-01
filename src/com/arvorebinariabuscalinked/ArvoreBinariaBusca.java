@@ -68,10 +68,10 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
             return null;
         }
         
-        if (this.noCorrente.getChave().compareTo(chave) < 0) {
+        if (chave.compareTo(this.noCorrente.getChave()) < 0) {
             this.noCorrente = this.noCorrente.getFilhoEsquerdo();
             return this.remover(chave);
-        } else if (this.noCorrente.getChave().compareTo(chave) > 0) {
+        } else if (chave.compareTo(this.noCorrente.getChave()) > 0) {
             this.noCorrente = this.noCorrente.getFilhoDireito();
             return this.remover(chave);
         } else {
@@ -80,7 +80,7 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
             if (this.noCorrente.getFilhoEsquerdo() == null && this.noCorrente.getFilhoDireito() != null) {
                 this.noCorrente.getFilhoDireito().setPai(this.noCorrente.getPai());
 
-                if (this.noCorrente.getPai().getChave().compareTo(this.noCorrente.getChave()) > 0) {
+                if (this.noCorrente.getChave().compareTo(this.noCorrente.getPai().getChave()) > 0) {
                     this.noCorrente.getPai().setFilhoDireito(this.noCorrente.getFilhoDireito());
                 } else {
                     this.noCorrente.getPai().setFilhoEsquerdo(this.noCorrente.getFilhoDireito());
@@ -94,7 +94,7 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
             } else if (this.noCorrente.getFilhoEsquerdo() != null && this.noCorrente.getFilhoDireito() == null) {
                 this.noCorrente.getFilhoEsquerdo().setPai(this.noCorrente.getPai());
                 
-                if (this.noCorrente.getPai().getChave().compareTo(this.noCorrente.getChave()) > 0) {
+                if (this.noCorrente.getChave().compareTo(this.noCorrente.getPai().getChave()) > 0) {
                     this.noCorrente.getPai().setFilhoDireito(this.noCorrente.getFilhoEsquerdo());
                 } else {
                     this.noCorrente.getPai().setFilhoEsquerdo(this.noCorrente.getFilhoEsquerdo());
@@ -104,15 +104,15 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
                 this.noCorrente = this.raiz;
                 return noRetorno.getValor();
                 
-            // No apresenta subarvore
-            } else {
+            // No apresenta subarvore esquerda e direita
+            } else if (this.noCorrente.getFilhoEsquerdo() != null && this.noCorrente.getFilhoDireito() != null) {
                 No<Chave, Valor> noAux = retornarAntecessor(this.noCorrente);
                 
                 this.noCorrente.getFilhoDireito().setPai(noAux);
                 this.noCorrente.getFilhoEsquerdo().setPai(noAux);
                 noAux.setPai(this.noCorrente.getPai());
                 
-                if (this.noCorrente.getPai().getChave().compareTo(this.noCorrente.getChave()) > 0) {
+                if (this.noCorrente.getChave().compareTo(this.noCorrente.getPai().getChave()) > 0) {
                     this.noCorrente.getPai().setFilhoDireito(noAux);
                 } else {
                     this.noCorrente.getPai().setFilhoEsquerdo(noAux );
@@ -122,6 +122,20 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
                 this.noCorrente = this.raiz;
                 return noRetorno.getValor();
                 
+            // No eh folha
+            } else {
+                
+                if (this.noCorrente.getChave().compareTo(this.noCorrente.getPai().getChave()) > 0) {
+                    this.noCorrente.getPai().setFilhoDireito(null);
+                } else {
+                    this.noCorrente.getPai().setFilhoEsquerdo(null);
+                }
+                
+                this.noCorrente.setPai(null);
+                
+                No<Chave, Valor> noRetorno = this.noCorrente;
+                this.noCorrente = this.raiz;
+                return noRetorno.getValor();
             }
             
         }

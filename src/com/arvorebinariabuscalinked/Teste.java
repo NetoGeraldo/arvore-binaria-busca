@@ -15,8 +15,13 @@ public class Teste {
         System.out.println(arvore.inserir(16, 16));
         System.out.println(arvore.inserir(17, 17));
         
-        System.out.println(arvore.remover(14));
+//        System.out.println(arvore.remover(14));
         
+        System.out.println(arvore.remover(15));
+        System.out.println(arvore.remover(13));
+        System.out.println(arvore.remover(14));
+        System.out.println(arvore.remover(16));
+        System.out.println(arvore.remover(17));
         
     }
 }
