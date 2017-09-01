@@ -15,6 +15,8 @@ public class Teste {
         System.out.println(arvore.inserir(16, 16));
         System.out.println(arvore.inserir(17, 17));
         
+        System.out.println(arvore.remover(14));
+        
         
     }
 }

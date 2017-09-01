@@ -63,10 +63,17 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
     @Override
     public Valor remover(Chave chave) {
         
+        if (this.noCorrente == null) {
+            this.noCorrente = this.raiz;
+            return null;
+        }
+        
         if (this.noCorrente.getChave().compareTo(chave) < 0) {
             this.noCorrente = this.noCorrente.getFilhoEsquerdo();
+            return this.remover(chave);
         } else if (this.noCorrente.getChave().compareTo(chave) > 0) {
             this.noCorrente = this.noCorrente.getFilhoDireito();
+            return this.remover(chave);
         } else {
 
             // No nao apresenta subarvore a esquerda
@@ -79,6 +86,10 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
                     this.noCorrente.getPai().setFilhoEsquerdo(this.noCorrente.getFilhoDireito());
                 }
                 
+                No<Chave, Valor> noRetorno = this.noCorrente;
+                this.noCorrente = this.raiz;
+                return noRetorno.getValor();
+                
             // No nao apresenta subarvore a direita
             } else if (this.noCorrente.getFilhoEsquerdo() != null && this.noCorrente.getFilhoDireito() == null) {
                 this.noCorrente.getFilhoEsquerdo().setPai(this.noCorrente.getPai());
@@ -89,18 +100,32 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
                     this.noCorrente.getPai().setFilhoEsquerdo(this.noCorrente.getFilhoEsquerdo());
                 }
                 
+                No<Chave, Valor> noRetorno = this.noCorrente;
+                this.noCorrente = this.raiz;
+                return noRetorno.getValor();
+                
             // No apresenta subarvore
             } else {
                 No<Chave, Valor> noAux = retornarAntecessor(this.noCorrente);
                 
+                this.noCorrente.getFilhoDireito().setPai(noAux);
+                this.noCorrente.getFilhoEsquerdo().setPai(noAux);
                 noAux.setPai(this.noCorrente.getPai());
-                // falta implementar
+                
+                if (this.noCorrente.getPai().getChave().compareTo(this.noCorrente.getChave()) > 0) {
+                    this.noCorrente.getPai().setFilhoDireito(noAux);
+                } else {
+                    this.noCorrente.getPai().setFilhoEsquerdo(noAux );
+                }
+                
+                No<Chave, Valor> noRetorno = this.noCorrente;
+                this.noCorrente = this.raiz;
+                return noRetorno.getValor();
                 
             }
             
         }
-
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
     
     private No<Chave, Valor> retornarAntecessor(No<Chave, Valor> no) {
