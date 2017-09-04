@@ -1,5 +1,7 @@
 package com.arvorebinariabuscalinked;
 
+import java.util.AbstractCollection;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -10,8 +12,11 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
     
     private No<Chave, Valor> raiz;
     private No<Chave, Valor> noCorrente; // responsavel por percorrer a arvore na hora de inserir
+    private Collection<Valor> collection; // responsavel por retornar uma lista nos metodos de obter
 
-    public ArvoreBinariaBusca() {   }
+    public ArvoreBinariaBusca() {
+        this.collection = new ArrayList<>();
+    }
     
     @Override
     public boolean inserir(Chave chave, Valor valor) {
@@ -203,7 +208,7 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
 
     @Override
     public void limpar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.raiz = null;
     }
 
     @Override
@@ -217,27 +222,97 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
 
     @Override
     public int tamanho() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.obterTodos().size();
     }
 
     @Override
     public Collection<Valor> obterTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.obterTodosEmOrdem();
     }
 
     @Override
     public Collection<Valor> obterTodosPreOrdem() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.preOrdem(this.raiz);
+        
+        Collection<Valor> listaRetorno = new ArrayList<>(this.collection);
+        
+        this.collection.clear();
+        
+        return listaRetorno;
     }
 
     @Override
     public Collection<Valor> obterTodosPosOrdem() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.posOrdem(this.raiz);
+        
+        Collection<Valor> listaRetorno = new ArrayList<>(this.collection);
+        
+        this.collection.clear();
+        
+        return listaRetorno;
     }
 
     @Override
     public Collection<Valor> obterTodosEmOrdem() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.emOrdem(this.raiz);
+        
+        Collection<Valor> listaRetorno = new ArrayList<>(this.collection);
+        
+        this.collection.clear();
+        
+        return listaRetorno;
+    }
+    
+    private void preOrdem(No<Chave, Valor> no) {
+        
+        if (no == null) {
+            return;
+        }
+        
+        collection.add(no.getValor());
+    
+        if (no.getFilhoEsquerdo() != null) {
+            this.preOrdem(no.getFilhoEsquerdo());
+        }
+        
+        if (no.getFilhoDireito() != null) {
+            this.preOrdem(no.getFilhoDireito());
+        }
+    
+    }
+    
+    private void posOrdem(No<Chave, Valor> no) {
+        if (no == null) {
+            return;
+        }
+        
+        if (no.getFilhoEsquerdo() != null) {
+            this.posOrdem(no.getFilhoEsquerdo());
+        }
+        
+        if (no.getFilhoDireito() != null) {
+            this.posOrdem(no.getFilhoDireito());
+        }
+        
+        this.collection.add(no.getValor());
+    }
+    
+    private void emOrdem(No<Chave, Valor> no) {
+        
+        if (no == null) {
+            return;
+        }
+        
+        if (no.getFilhoEsquerdo() != null) {
+            this.emOrdem(no.getFilhoEsquerdo());
+        }
+        
+        this.collection.add(no.getValor());
+        
+        if (no.getFilhoDireito() != null) {
+            this.emOrdem(no.getFilhoDireito());
+        }
+        
     }
 
     public No<Chave, Valor> getRaiz() {

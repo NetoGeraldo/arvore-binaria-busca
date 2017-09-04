@@ -27,10 +27,22 @@ public class Teste {
         System.out.println(arvore.inserir(19, 19));
         System.out.println(arvore.inserir(9, 9));
 
+        System.out.println(arvore.obterTodosEmOrdem());
+        
+        System.out.println("tamanho da arvore = " + arvore.tamanho());
+
         // Remoção
         System.out.println(arvore.remover(30));
         System.out.println(arvore.remover(18));
         System.out.println(arvore.remover(22));
+        
+        System.out.println("tamanho da arvore = " + arvore.tamanho());
+        
+        System.out.println(arvore.obterTodosEmOrdem());
+        
+        System.out.println(arvore.obterTodosPosOrdem());
+
+        System.out.println(arvore.obterTodosPreOrdem());
         
 
         
