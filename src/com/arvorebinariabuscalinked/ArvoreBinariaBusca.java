@@ -161,13 +161,20 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
             // No eh folha
             } else {
                 
-                if (this.noCorrente.getChave().compareTo(this.noCorrente.getPai().getChave()) > 0) {
-                    this.noCorrente.getPai().setFilhoDireito(null);
+                if (this.noCorrente == this.raiz) {
+                    this.raiz = null;
                 } else {
-                    this.noCorrente.getPai().setFilhoEsquerdo(null);
+                    
+                    if (this.noCorrente.getChave().compareTo(this.noCorrente.getPai().getChave()) > 0) {
+                        this.noCorrente.getPai().setFilhoDireito(null);
+                    } else {
+                        this.noCorrente.getPai().setFilhoEsquerdo(null);
+                    }
+
+                    this.noCorrente.setPai(null);
+                
                 }
                 
-                this.noCorrente.setPai(null);
                 
                 No<Chave, Valor> noRetorno = this.noCorrente;
                 this.noCorrente = this.raiz;
@@ -191,7 +198,7 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
     @Override
     public Valor buscar(Chave chave) {
         No<Chave, Valor> noRetorno = null;
-        while (noCorrente != null | chave.compareTo(noCorrente.getChave()) != 0) {            
+        while (noCorrente != null && chave.compareTo(noCorrente.getChave()) != 0) {            
             
             if (chave.compareTo(noCorrente.getChave()) < 0) {
                 noCorrente = noCorrente.getFilhoEsquerdo();
@@ -201,9 +208,15 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
             
         }
         
-        noRetorno = noCorrente;
-        noCorrente = this.raiz;
-        return noRetorno.getValor();
+        
+        if (noCorrente == null) {
+            return null;
+        } else {
+            noRetorno = noCorrente;
+            noCorrente = this.raiz;
+            return noRetorno.getValor();
+        }
+        
     }
 
     @Override
