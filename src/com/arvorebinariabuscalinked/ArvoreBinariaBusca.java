@@ -3,6 +3,8 @@ package com.arvorebinariabuscalinked;
 import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  *
@@ -215,6 +217,32 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
             noRetorno = noCorrente;
             noCorrente = this.raiz;
             return noRetorno.getValor();
+        }
+        
+    }
+    
+    public void navegacaoLargura() {
+        
+        Queue<No<Chave, Valor>> fila = new LinkedList<>();
+        
+        No<Chave, Valor> noCorrente = this.raiz;
+        
+        fila.add(noCorrente);
+        
+        while (!fila.isEmpty()) {
+
+            noCorrente = fila.poll();
+
+            System.out.print(noCorrente.getValor() + " ");
+            
+            if (noCorrente.getFilhoEsquerdo() != null ) {
+                fila.add(noCorrente.getFilhoEsquerdo());
+            }
+            
+            if (noCorrente.getFilhoDireito() != null) {
+                fila.add(noCorrente.getFilhoDireito());
+            }
+            
         }
         
     }
