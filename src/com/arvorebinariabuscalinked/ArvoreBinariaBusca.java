@@ -212,6 +212,7 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
         
         
         if (noCorrente == null) {
+            this.noCorrente = this.raiz;
             return null;
         } else {
             noRetorno = noCorrente;
@@ -222,6 +223,10 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
     }
     
     public void navegacaoLargura() {
+        
+        if (this.ehVazia()) {
+            return;
+        }
         
         Queue<No<Chave, Valor>> fila = new LinkedList<>();
         
