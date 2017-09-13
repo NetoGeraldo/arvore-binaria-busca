@@ -222,12 +222,13 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
         
     }
     
-    public void navegacaoLargura() {
+    public Collection<Valor> navegacaoLargura() {
         
         if (this.ehVazia()) {
-            return;
+            return null;
         }
         
+        this.collection.clear();
         Queue<No<Chave, Valor>> fila = new LinkedList<>();
         
         No<Chave, Valor> noCorrente = this.raiz;
@@ -238,7 +239,7 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
 
             noCorrente = fila.poll();
 
-            System.out.print(noCorrente.getValor() + " ");
+            this.collection.add(noCorrente.getValor());
             
             if (noCorrente.getFilhoEsquerdo() != null ) {
                 fila.add(noCorrente.getFilhoEsquerdo());
@@ -249,6 +250,8 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
             }
             
         }
+        
+        return this.collection;
         
     }
 
@@ -278,33 +281,33 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
 
     @Override
     public Collection<Valor> obterTodosPreOrdem() {
+        this.collection.clear();
+        
         this.preOrdem(this.raiz);
         
         Collection<Valor> listaRetorno = new ArrayList<>(this.collection);
-        
-        this.collection.clear();
         
         return listaRetorno;
     }
 
     @Override
     public Collection<Valor> obterTodosPosOrdem() {
+        this.collection.clear();
+
         this.posOrdem(this.raiz);
         
         Collection<Valor> listaRetorno = new ArrayList<>(this.collection);
-        
-        this.collection.clear();
         
         return listaRetorno;
     }
 
     @Override
     public Collection<Valor> obterTodosEmOrdem() {
+        this.collection.clear();
+
         this.emOrdem(this.raiz);
         
         Collection<Valor> listaRetorno = new ArrayList<>(this.collection);
-        
-        this.collection.clear();
         
         return listaRetorno;
     }
