@@ -14,7 +14,7 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
     
     private No<Chave, Valor> raiz;
     private No<Chave, Valor> noCorrente; // responsavel por percorrer a arvore na hora de inserir
-    private Collection<Valor> collection; // responsavel por retornar uma lista nos metodos de obter
+    private ArrayList<Valor> collection; // responsavel por retornar uma lista nos metodos de obter
 
     public ArvoreBinariaBusca() {
         this.collection = new ArrayList<>();
@@ -222,7 +222,7 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
         
     }
     
-    public Collection<Valor> navegacaoLargura() {
+    public ArrayList<Valor> navegacaoLargura() {
         
         if (this.ehVazia()) {
             return null;
@@ -275,39 +275,39 @@ public class ArvoreBinariaBusca<Chave extends Comparable<Chave>, Valor> implemen
     }
 
     @Override
-    public Collection<Valor> obterTodos() {
+    public ArrayList<Valor> obterTodos() {
         return this.obterTodosEmOrdem();
     }
 
     @Override
-    public Collection<Valor> obterTodosPreOrdem() {
+    public ArrayList<Valor> obterTodosPreOrdem() {
         this.collection.clear();
         
         this.preOrdem(this.raiz);
         
-        Collection<Valor> listaRetorno = new ArrayList<>(this.collection);
+        ArrayList<Valor> listaRetorno = this.collection;
         
         return listaRetorno;
     }
 
     @Override
-    public Collection<Valor> obterTodosPosOrdem() {
+    public ArrayList<Valor> obterTodosPosOrdem() {
         this.collection.clear();
 
         this.posOrdem(this.raiz);
         
-        Collection<Valor> listaRetorno = new ArrayList<>(this.collection);
+        ArrayList<Valor> listaRetorno = this.collection;
         
         return listaRetorno;
     }
 
     @Override
-    public Collection<Valor> obterTodosEmOrdem() {
+    public ArrayList<Valor> obterTodosEmOrdem() {
         this.collection.clear();
 
         this.emOrdem(this.raiz);
         
-        Collection<Valor> listaRetorno = new ArrayList<>(this.collection);
+        ArrayList<Valor> listaRetorno = this.collection;
         
         return listaRetorno;
     }
